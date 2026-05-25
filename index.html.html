@@ -1,0 +1,271 @@
+import turtle
+import math
+import time
+
+# ===================================
+# SETUP SCREEN
+# ===================================
+
+screen = turtle.Screen()
+screen.setup(width=1000, height=700)
+screen.bgcolor("black")
+screen.title("For Ell ❤️")
+
+screen.tracer(0)
+
+# ===================================
+# TURTLES
+# ===================================
+
+heart = turtle.Turtle()
+heart.hideturtle()
+heart.speed(0)
+heart.color("red")
+heart.pensize(3)
+
+text = turtle.Turtle()
+text.hideturtle()
+text.penup()
+
+flower = turtle.Turtle()
+flower.hideturtle()
+flower.speed(0)
+
+stars = turtle.Turtle()
+stars.hideturtle()
+stars.speed(0)
+
+# ===================================
+# BINTANG
+# ===================================
+
+def create_stars():
+
+    import random
+
+    stars.clear()
+
+    for _ in range(120):
+
+        x = random.randint(-500, 500)
+        y = random.randint(-350, 350)
+
+        stars.penup()
+        stars.goto(x, y)
+
+        colors = ["white", "pink", "yellow"]
+
+        stars.dot(random.randint(2,5),
+        random.choice(colors))
+
+# ===================================
+# LOVE SHAPE
+# ===================================
+
+def draw_heart(scale, color):
+
+    heart.clear()
+
+    heart.color(color)
+
+    heart.begin_fill()
+
+    for i in range(360):
+
+        angle = math.radians(i)
+
+        x = 16 * math.sin(angle)**3
+        y = (
+            13 * math.cos(angle)
+            - 5 * math.cos(2 * angle)
+            - 2 * math.cos(3 * angle)
+            - math.cos(4 * angle)
+        )
+
+        x *= scale
+        y *= scale
+
+        if i == 0:
+            heart.penup()
+            heart.goto(x, y)
+            heart.pendown()
+
+        else:
+            heart.goto(x, y)
+
+    heart.end_fill()
+
+# ===================================
+# BUNGA
+# ===================================
+
+def draw_flower():
+
+    flower.clear()
+
+    flower.penup()
+    flower.goto(280, -220)
+    flower.pendown()
+
+    # batang
+    flower.color("green")
+    flower.pensize(8)
+    flower.setheading(90)
+    flower.forward(140)
+
+    # daun
+    flower.right(45)
+    flower.circle(30,90)
+
+    flower.left(180)
+    flower.circle(-30,90)
+
+    # bunga
+    flower.penup()
+    flower.goto(280, -60)
+    flower.pendown()
+
+    flower.color("hotpink")
+
+    for _ in range(8):
+
+        flower.begin_fill()
+
+        flower.circle(25,60)
+        flower.left(120)
+        flower.circle(25,60)
+
+        flower.end_fill()
+
+        flower.left(45)
+
+    flower.penup()
+    flower.goto(280,-40)
+    flower.dot(35,"yellow")
+
+# ===================================
+# TEKS BERJALAN
+# ===================================
+
+def typing_effect(message, y, color, size):
+
+    text.clear()
+
+    typed = ""
+
+    for char in message:
+
+        typed += char
+
+        text.clear()
+
+        text.goto(0, y)
+        text.color(color)
+
+        text.write(
+            typed,
+            align="center",
+            font=("Arial", size, "bold")
+        )
+
+        screen.update()
+        time.sleep(0.08)
+
+# ===================================
+# START
+# ===================================
+
+create_stars()
+draw_flower()
+
+# ===================================
+# INTRO
+# ===================================
+
+typing_effect("Hi Ell ❤️", 180, "hotpink", 32)
+
+time.sleep(1)
+
+typing_effect("I Have Something For You...", 120, "white", 24)
+
+time.sleep(1)
+
+typing_effect("✨", 60, "yellow", 40)
+
+time.sleep(1)
+
+# ===================================
+# MAIN LOOP
+# ===================================
+
+messages = [
+
+    "You Are My Favorite Person ❤️",
+    "Every Moment With You Feels Special 🌹",
+    "Thank You For Existing ✨",
+    "I Love You Ell ❤️"
+]
+
+colors = [
+    "red",
+    "hotpink",
+    "deeppink",
+    "crimson"
+]
+
+while True:
+
+    for i in range(len(messages)):
+
+        # animasi denyut love
+        for s in range(10,15):
+
+            draw_heart(s, colors[i])
+
+            text.goto(0, 200)
+            text.color("hotpink")
+
+            text.write(
+                "❤️ ELL ❤️",
+                align="center",
+                font=("Arial", 34, "bold")
+            )
+
+            text.goto(0, -230)
+            text.color("white")
+
+            text.write(
+                messages[i],
+                align="center",
+                font=("Arial", 22, "bold")
+            )
+
+            screen.update()
+            time.sleep(0.08)
+
+        for s in range(15,10,-1):
+
+            draw_heart(s, colors[i])
+
+            text.goto(0, 200)
+            text.color("hotpink")
+
+            text.write(
+                "❤️ ELL ❤️",
+                align="center",
+                font=("Arial", 34, "bold")
+            )
+
+            text.goto(0, -230)
+            text.color("white")
+
+            text.write(
+                messages[i],
+                align="center",
+                font=("Arial", 22, "bold")
+            )
+
+            screen.update()
+            time.sleep(0.08)
+
+        time.sleep(1)
